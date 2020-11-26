@@ -1,4 +1,4 @@
-
+##
 
 import game_board as game
 import observer as ref
