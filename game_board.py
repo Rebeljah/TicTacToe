@@ -1,7 +1,7 @@
 
 
 def get_new_game():
-    board_size = 5
+    board_size = 3
     board = []
     for row in range(board_size):
         board.append([' '] * board_size)
