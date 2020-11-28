@@ -5,15 +5,15 @@ def get_new_game():
 
     # get game mode
     game_mode = ''
-    while game_mode not in ['1', '2']:
+    while game_mode not in [1, 2]:
         print('-' * 58)
-        game_mode = input('Select an option:\n'
-                          '# 1 - PLAYER V. PLAYER\n'
-                          '# 2 - PLAYER VS. CPU\n'
-                          'Choice (enter a number): ')
-    if game_mode == '1':
+        game_mode = int(input('Select an option:\n'
+                              '# 1 - PLAYER V. PLAYER\n'
+                              '# 2 - PLAYER VS. CPU\n'
+                              'Choice (enter a number): '))
+    if game_mode == 1:
         game_mode = 'PVP'
-    elif game_mode == '2':
+    elif game_mode == 2:
         game_mode = 'PVE'
 
     # get player characters
@@ -72,7 +72,7 @@ def player_make_move(board, p1_char, p2_char, turn):
 
 
 def get_current_char(char1, char2, turn):
-    if turn == '1':
+    if turn == 1:
         return char1
     else:
         return char2

@@ -24,9 +24,9 @@ def game_loop(board, game_mode, p1_char, p2_char):
     while not winner:
         turn = ref.get_next_turn(turn)
 
-        if game_mode == 'PVP' or turn == '1':
+        if game_mode == 'PVP' or turn == 1:
             board = game.player_make_move(board, p1_char, p2_char, turn)
-        elif game_mode == 'PVE' and turn == '2':
+        elif game_mode == 'PVE' and turn == 2:
             board = cpu.choose_move(board, p2_char)
 
         winner = ref.get_winner(board, p1_char, p2_char)

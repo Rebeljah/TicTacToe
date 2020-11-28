@@ -7,6 +7,7 @@ def get_winner(board, p1_char, p2_char):
     diag_lines = get_diag_rows(board)
     board_size = len(board)
 
+    winner = ''
     for line_type in [hoz_lines, vert_lines, diag_lines]:
         for line in line_type:
             is_win = True  # switches to False if not a winning line
@@ -16,12 +17,11 @@ def get_winner(board, p1_char, p2_char):
 
             if is_win:
                 if line[0] == p1_char:
-                    winner = '1'
+                    winner = 1
                 else:
-                    winner = '2'
+                    winner = 2
 
-                return winner
-    return False
+    return winner
 
 
 def get_hoz_rows(board):
@@ -64,7 +64,7 @@ def get_diag_rows(board):
 
 
 def get_next_turn(turn):
-    if turn == '' or turn == '2':
-        return '1'
+    if turn == '' or turn == 2:
+        return 1
     else:
-        return '2'
+        return 2

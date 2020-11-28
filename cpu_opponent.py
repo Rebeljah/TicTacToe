@@ -14,7 +14,7 @@ def choose_move(board, cpu_char):
     while not winner:
         turn = ref.get_next_turn(turn)
 
-        # reset the board state if no more boxes are available 
+        # reset the board state if no more boxes are available
         if find_empty_boxes(board_copy) == []:
             board_copy = copy_board(board)
 
@@ -24,7 +24,7 @@ def choose_move(board, cpu_char):
 
 def simulate_move(board, cpu_char, cpu2_char, turn):
     # choose the char to use
-    if turn == '1':
+    if turn == 1:
         game_char = cpu2_char
     else:
         game_char = cpu2_char
