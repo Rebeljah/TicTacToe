@@ -18,9 +18,9 @@ def ask_play_again():
 
 def game_loop(board, game_mode, p1_char, p2_char):
     game.refresh_display(board)
-
     turn = ''
     winner = ''
+
     while not winner:
         turn = ref.get_next_turn(turn)
 
@@ -29,9 +29,9 @@ def game_loop(board, game_mode, p1_char, p2_char):
         elif game_mode == 'PVE' and turn == '2':
             board = cpu.choose_move(board, p2_char)
 
-        game.refresh_display(board)
-
         winner = ref.get_winner(board, p1_char, p2_char)
+
+        game.refresh_display(board)
 
     return winner
 
