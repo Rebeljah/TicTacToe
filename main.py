@@ -5,15 +5,16 @@ import observer as ref
 import cpu_opponent as cpu
 
 
-def ask_play_again():
-    response = ''
-    while response not in ['y', 'n']:
-        response = input('Insert another coin? (y/n): ').lower()
+def main():
+    play_again = True
 
-    if response == 'y':
-        return True
-    else:
-        return False
+    while play_again:
+        board, game_mode, p1_char, p2_char = game.get_new_game()
+
+        winner = game_loop(board, game_mode, p1_char, p2_char)
+        print(winner, 'WINS!')
+
+        play_again = ask_play_again()
 
 
 def game_loop(board, game_mode, p1_char, p2_char):
@@ -36,15 +37,15 @@ def game_loop(board, game_mode, p1_char, p2_char):
     return winner
 
 
-def main():
-    play_again = True
-    while play_again:
-        board, game_mode, p1_char, p2_char = game.get_new_game()
+def ask_play_again():
+    response = ''
+    while response not in ['y', 'n']:
+        response = input('Insert another coin? (y/n): ').lower()
 
-        winner = game_loop(board, game_mode, p1_char, p2_char)
-        print(winner, 'WINS!')
-
-        play_again = ask_play_again()
+    if response == 'y':
+        return True
+    else:
+        return False
 
 
 main()

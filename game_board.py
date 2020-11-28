@@ -4,21 +4,11 @@ def get_new_game():
     board = get_blank_board()
 
     # get game mode
-    game_mode = ''
-    while game_mode not in [1, 2]:
-        print('-' * 58)
-        game_mode = int(input('Select an option:\n'
-                              '# 1 - PLAYER V. PLAYER\n'
-                              '# 2 - PLAYER VS. CPU\n'
-                              'Choice (enter a number): '))
-    if game_mode == 1:
-        game_mode = 'PVP'
-    elif game_mode == 2:
-        game_mode = 'PVE'
+    game_mode = ask_game_mode()
 
     # get player characters
     p1_char = ''
-    while p1_char not in ['X', 'O']:
+    while p1_char not in ('X', 'O'):
         print('-' * 58)
         p1_char = input('Player 1, Choose X or O\n'
                         'Choice (x or o): ').upper()
@@ -38,6 +28,23 @@ def get_blank_board():
         board.append([' '] * board_size)
 
     return board
+
+
+def ask_game_mode():
+    mode = ''
+    while mode not in [1, 2]:
+        print('-' * 58 + '\n',
+              'Select an option:\n'
+              '# 1 - PLAYER V. PLAYER\n'
+              '# 2 - PLAYER VS. CPU', sep='')
+        mode = int(input('Choice (enter a number): '))
+
+    if mode == 1:
+        mode = 'PVP'
+    else:
+        mode = 'PVE'
+
+    return mode
 
 
 def get_opposite_char(char):
@@ -71,13 +78,26 @@ def player_make_move(board, p1_char, p2_char, turn):
     return board
 
 
-def get_current_char(char1, char2, turn):
+def get_current_char(p1_char, p2_char, turn):
     if turn == 1:
-        return char1
+        return p1_char
     else:
-        return char2
+        return p2_char
+
+
+def find_empty_boxes(board):
+    empty_boxes = []
+    box_num = 0
+    for row in board:
+        for col in row:
+            box_num += 1
+            if col == ' ':
+                empty_boxes.append(box_num)
+
+    return empty_boxes
 
 
 def refresh_display(board):
+    print('-' * 58)
     for row in board:
         print(row)
