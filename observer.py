@@ -16,9 +16,10 @@ def get_winner(board, p1_char, p2_char):
 
             if is_win:
                 if line[0] == p1_char:
-                    winner = 'p1'
+                    winner = '1'
                 else:
-                    winner = 'p2'
+                    winner = '2'
+
                 return winner
     return False
 
@@ -63,7 +64,7 @@ def get_diag_rows(board):
 
 
 def get_next_turn(turn):
-    if turn == 'p1':
-        return 'p2'
+    if turn == '' or turn == '2':
+        return '1'
     else:
-        return 'p1'
+        return '2'

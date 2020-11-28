@@ -2,6 +2,7 @@
 
 import game_board as game
 import observer as ref
+import cpu_opponent as cpu
 
 
 def ask_play_again():
@@ -17,7 +18,7 @@ def ask_play_again():
 
 def game_loop(board, game_mode, p1_char, p2_char):
     game.refresh_display(board)
-    turn = 'p1'
+    turn = '1'
 
     while True:
         # get the first move then swap turns
@@ -34,7 +35,7 @@ def game_loop(board, game_mode, p1_char, p2_char):
         if game_mode == 'PVP':
             board = game.player_make_move(board, p1_char, p2_char, turn)
         elif game_mode == 'PVE':
-            board = cpu.make_move(board, p2_char)
+            board = cpu.choose_move(board, p2_char)
         game.refresh_display(board)
 
         winner = ref.get_winner(board, p1_char, p2_char)

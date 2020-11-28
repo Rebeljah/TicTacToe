@@ -1,10 +1,7 @@
 
 
 def get_new_game():
-    board_size = 3
-    board = []
-    for row in range(board_size):
-        board.append([' '] * board_size)
+    board = get_blank_board()
 
     # get game mode
     game_mode = ''
@@ -25,21 +22,35 @@ def get_new_game():
         print('-' * 58)
         p1_char = input('Player 1, Choose X or O\n'
                         'Choice (x or o): ').upper()
-    if p1_char == 'X':
-        p2_char = 'O'
-    else:
-        p2_char = 'X'
+
+    p2_char = get_opposite_char(p1_char)
 
     return board, game_mode, p1_char, p2_char
 
 
+def get_blank_board():
+    # create a 2d "board".
+    # row and column count correspond to board size
+
+    board_size = 3
+    board = []
+    for row in range(board_size):
+        board.append([' '] * board_size)
+
+    return board
+
+
+def get_opposite_char(char):
+    if char == 'X':
+        opposite_char = 'O'
+    else:
+        opposite_char = 'X'
+    return opposite_char
+
+
 def player_make_move(board, p1_char, p2_char, turn):
     board_size = len(board)
-    # choose the char to use
-    if turn == 'p1':
-        player_char = p1_char
-    else:
-        player_char = p2_char
+    player_char = get_current_char(p1_char, p2_char, turn)
 
     possible_choices = board_size**2
     box_choice = ''
@@ -58,6 +69,13 @@ def player_make_move(board, p1_char, p2_char, turn):
                 board[row][col] = player_char
 
     return board
+
+
+def get_current_char(char1, char2, turn):
+    if turn == '1':
+        return char1
+    else:
+        return char2
 
 
 def refresh_display(board):
