@@ -78,7 +78,7 @@ def player_make_move(board, p1_char, p2_char, turn):
     return board
 
 
-def get_current_char(p1_char, p2_char, turn):
+def get_current_char(p1_char, p2_char, turn):  # TODO - this can be done w/ dictionaries
     if turn == 1:
         return p1_char
     else:
