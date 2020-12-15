@@ -66,7 +66,7 @@ def get_diag_rows(board):
     size = len(board)
 
     diagonal = [board[i][i] for i in range(size)]
-    anti_diagonal = [board[i][-i-1] for i in range(size)]
+    anti_diagonal = [board[i][-i - 1] for i in range(size)]
 
     diag_rows = [diagonal, anti_diagonal]
 
