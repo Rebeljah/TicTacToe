@@ -1,5 +1,6 @@
 '''observer.py'''
 
+
 def get_winner(board, p1_char, p2_char):
     '''Returns winner (1 or 2) if a winning row is found
 
