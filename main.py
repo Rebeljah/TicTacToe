@@ -1,4 +1,3 @@
-##
 
 import game_board as game
 import observer as ref
@@ -18,12 +17,18 @@ def main():
 
 
 def game_loop(board, game_mode, p1_char, p2_char):
+    '''Keep letting p1 and p2/cpu make moves until one side WINS
+       The game loops consists of 4 steps. First, the current turn is decided;
+       it will be either 1 or 2. Second, either the current player or cpu makes
+       a move. Third, the board is checked for a winner. If a win is found, the
+       winning player / cpu is indicated by the return value, either 1 or 2.
+       -1 will always be p1, 2 can be either p2 or a opponent'''
     game.refresh_display(board)
     turn = ''
     winner = ''
 
     while not winner:
-        turn = ref.get_next_turn(turn)
+        turn = game.get_next_turn(turn)
 
         if game_mode == 'PVP' or turn == 1:
             board = game.player_make_move(board, p1_char, p2_char, turn)
