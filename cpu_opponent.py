@@ -22,40 +22,45 @@ import game_board as game
 import observer as ref
 
 
-def choose_move(board, player_char, cpu_char):
-    while True:
+def choose_move(board, p1_char, p2_char, turn):
+    for timeout in range(10**7):
         sim_board = copy.deepcopy(board)
 
         move = \
-            simulate_game(sim_board, player_char, cpu_char)
+            simulate_game(sim_board, p1_char, p2_char, turn)
 
         if move:
-            board = place_char(board, cpu_char, move)
+            char = game.get_current_char(p1_char, p2_char, turn)
+            board = place_char(board, char, move)
             return board
 
+    char = game.get_current_char(p1_char, p2_char, turn)
+    move = get_random_index(board)
+    return place_char(board, char, move)
 
-def simulate_game(sim_board, player_char, cpu_char):
-    turn = 1
-    move = 0
+
+def simulate_game(sim_board, p1_char, p2_char, turn):
+    first_turn = turn
+    move_num = 0
     mem = {}
     winner = ''
 
     while not winner:
         turn = game.get_next_turn(turn)
-        char = game.get_current_char(player_char, cpu_char, turn)
+        char = game.get_current_char(p1_char, p2_char, turn)
 
         index = get_random_index(sim_board)
         if index:
-            char = game.get_current_char(player_char, cpu_char, turn)
+            char = game.get_current_char(p1_char, p2_char, turn)
             sim_board = place_char(sim_board, char, index)
 
-            if turn == 2:
-                move += 1
-                mem.update({move: index})
+            if turn == first_turn:
+                move_num += 1
+                mem.update({move_num: index})
         else:
             return None
 
-        winner, row = ref.get_winner(sim_board, player_char, cpu_char)
+        winner, row = ref.get_winner(sim_board, p1_char, p2_char)
 
     return get_first_move(winner, row, mem)
 
@@ -75,8 +80,6 @@ def get_random_index(sim_board):
 
 
 def get_first_move(winner, winning_row, mem):
-    if winner == 1:
-        return None
 
     actual_mem = {}
     winning_indices = [element[0] for element in winning_row]

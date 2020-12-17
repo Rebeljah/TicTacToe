@@ -3,7 +3,7 @@ import game_board as game
 import observer as ref
 import cpu_opponent as cpu
 
-BOARD_SIZE = 3
+BOARD_SIZE = 6
 
 
 def main():
@@ -33,9 +33,10 @@ def game_loop(board, game_mode, p1_char, p2_char):
         turn = game.get_next_turn(turn)
 
         if game_mode == 'PVP' or turn == 1:
-            board = game.player_make_move(board, p1_char, p2_char, turn)
+            board = cpu.choose_move(board, p1_char, p2_char, turn)
+            # board = game.player_make_move(board, p1_char, p2_char, turn)
         elif game_mode == 'PVE' and turn == 2:
-            board = cpu.choose_move(board, p1_char, p2_char)
+            board = cpu.choose_move(board, p1_char, p2_char, turn)
 
         winner, row = ref.get_winner(board, p1_char, p2_char)
 
