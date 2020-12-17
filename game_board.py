@@ -91,17 +91,6 @@ def get_current_char(p1_char, p2_char, turn):  # TODO - this can be done w/ dict
     return p2_char
 
 
-def find_empty_boxes(board):
-    '''Return a list of index pairs for each empty element in the board'''
-    empty_boxes = []
-    for r_idx, row in enumerate(board):
-        for c_idx, col in enumerate(row):
-            if col == ' ':
-                empty_boxes.append((r_idx, c_idx))
-
-    return empty_boxes
-
-
 def refresh_display(board):
     '''display the board to the terminal'''
     print('-' * 58)

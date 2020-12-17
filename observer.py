@@ -2,73 +2,68 @@
 
 
 def get_winner(board, p1_char, p2_char):
-    '''Returns winner (1 or 2) if a winning row is found
-
-       Get each possible winning line from the board, then check each for a win.
-
-       '''
     board_size = len(board)
 
-    hoz_lines = get_hoz_rows(board)
-    vert_lines = get_vert_rows(board)
-    diag_lines = get_diag_rows(board)
+    hoz_rows = get_hoz_rows(board)
+    vert_rows = get_vert_rows(board)
+    diag_rows = get_diag_rows(board)
 
-    for line_type in (hoz_lines, vert_lines, diag_lines):
-        for line in line_type:
+    for type in (hoz_rows, vert_rows, diag_rows):
+        for row in type:
             is_win = True  # True as default then test for lose conditions
-            if line[0] == ' ':
+            if row[0][1] == ' ':
                 is_win = False
             else:
                 for idx in range(1, board_size):
-                    if line[idx] != line[0]:
+                    if row[idx][1] != row[0][1]:
                         is_win = False
 
-            if is_win:  # if no lose conditions were found in the line
-                if line[0] == p1_char:
-                    winner = '1'
+            if is_win:  # if no lose conditions were found in the row
+                if row[0][1] == p1_char:
+                    winner = 1
                 else:
-                    winner = '2'
-                return winner
-            else:
-                winner = False  # set winner to False then continue to next line
-    return winner
+                    winner = 2
+                return winner, row
+    return None, None  # no winning line found
 
 
 def get_hoz_rows(board):
-    '''Simply copies the board (each element represents a hoz row already)'''
-    hoz_rows = board.copy()
+    size = len(board)
+    rows = []
 
-    return hoz_rows
+    for row in range(size):
+        rows.append([((row, col), board[row][col]) for col in range(size)])
+
+    return rows
 
 
 def get_vert_rows(board):
-    '''For each column in the board, get the elements in that column.
+    size = len(board)
+    rows = []
 
-      Make a list for each vertical row, appending each list to 'diag_rows'
-       '''
-    board_size = len(board)
+    for col in range(size):
+        rows.append([((row, col), board[row][col]) for row in range(size)])
 
-    vert_rows = []
-
-    for col in range(board_size):
-        vert_row = [board[row][col] for row in range(board_size)]
-        vert_rows.append(vert_row)
-
-    return vert_rows
+    return rows
 
 
 def get_diag_rows(board):
-    '''Returns a list of the diagonal rows in the board
-
-       In the first diagonal, increase both the row and col index by one
-       on each iteration.
-       For the second diagonal, the row increases by one on each iteration, the
-       col is equal to -i-1.'''
     size = len(board)
 
-    diagonal = [board[i][i] for i in range(size)]
-    anti_diagonal = [board[i][-i - 1] for i in range(size)]
+    rows = [[], []]
+    for i in range(size):
+        rows[0].append(((i, i), board[i][i]))
+        rows[1].append(((i, -i - 1), board[i][-i - 1]))
 
-    diag_rows = [diagonal, anti_diagonal]
+    return rows
 
-    return diag_rows
+
+def find_empty_indices(board):
+    '''Return a list of index pairs for each empty element in the board'''
+    empty_indices = []
+    for r_idx, row in enumerate(board):
+        for c_idx, col in enumerate(row):
+            if col == ' ':
+                empty_indices.append((r_idx, c_idx))
+
+    return empty_indices
