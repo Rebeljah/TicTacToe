@@ -1,11 +1,11 @@
 '''game_board.py'''
 
 
-def get_new_game():
-    board = get_blank_board()
+def get_new_game(size):
+    board = get_blank_board(size)
 
     # get game mode
-    game_mode = ask_game_mode()
+    game_mode = 'PVE'  # ask_game_mode() GAME MODE pve/PVP
 
     # get player characters
     p1_char = ask_p1_char()
@@ -15,12 +15,11 @@ def get_new_game():
     return board, game_mode, p1_char, p2_char
 
 
-def get_blank_board():
+def get_blank_board(size):
     '''Returns a square array with each element set to ' ' '''
-    board_size = 3
-    blank_row = [' '] * board_size
+    blank_row = [' '] * size
 
-    board = [blank_row[:] for row in range(board_size)]
+    board = [blank_row[:] for row in range(size)]
 
     return board
 

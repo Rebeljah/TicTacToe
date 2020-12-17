@@ -3,12 +3,14 @@ import game_board as game
 import observer as ref
 import cpu_opponent as cpu
 
+BOARD_SIZE = 3
+
 
 def main():
     play_again = True
 
     while play_again:
-        board, game_mode, p1_char, p2_char = game.get_new_game()
+        board, game_mode, p1_char, p2_char = game.get_new_game(BOARD_SIZE)
 
         winner = game_loop(board, game_mode, p1_char, p2_char)
         print(winner, 'WINS!')
