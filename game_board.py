@@ -93,8 +93,15 @@ def get_current_char(p1_char, p2_char, turn):  # TODO - this can be done w/ dict
 def refresh_display(board):
     '''display the board to the terminal'''
     print('-' * 58)
+    print('There are', str(board).count("' '"), 'boxes left. Enter a number...')
     for row in board:
+        row = str(row)
+        row = row.replace('[', '| ')
+        row = row.replace(']', ' |')
+        row = row.replace(',', ' |')
+
         print(row)
+        print('-' * len(row))
 
 
 def get_next_turn(current_turn):
