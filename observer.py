@@ -1,69 +1,69 @@
+'''observer.py'''
 
 
 def get_winner(board, p1_char, p2_char):
-
-    hoz_lines = get_hoz_rows(board)
-    vert_lines = get_vert_rows(board)
-    diag_lines = get_diag_rows(board)
     board_size = len(board)
 
-    for line_type in [hoz_lines, vert_lines, diag_lines]:
-        for line in line_type:
-            is_win = True  # switches to False if not a winning line
-            for idx in range(board_size):
-                if line[idx] != line[0] or line[0] == ' ':
-                    is_win = False
+    hoz_rows = get_hoz_rows(board)
+    vert_rows = get_vert_rows(board)
+    diag_rows = get_diag_rows(board)
 
-            if is_win:
-                if line[0] == p1_char:
-                    winner = 'p1'
+    for type in (hoz_rows, vert_rows, diag_rows):
+        for row in type:
+            is_win = True  # True as default then test for lose conditions
+            if row[0][1] == ' ':
+                is_win = False
+            else:
+                for idx in range(1, board_size):
+                    if row[idx][1] != row[0][1]:
+                        is_win = False
+
+            if is_win:  # if no lose conditions were found in the row
+                if row[0][1] == p1_char:
+                    winner = 1
                 else:
-                    winner = 'p2'
-                return winner
-    return False
+                    winner = 2
+                return winner, row
+    return None, None  # no winning line found
 
 
 def get_hoz_rows(board):
-    hoz_rows = []
-    for hoz_row in board:
-        hoz_rows.append(hoz_row)
-    return hoz_rows
+    size = len(board)
+    rows = []
+
+    for row in range(size):
+        rows.append([((row, col), board[row][col]) for col in range(size)])
+
+    return rows
 
 
 def get_vert_rows(board):
-    vert_rows = []
-    for column in range(len(board)):
-        vert_row = []
-        for hoz_row in board:
-            vert_row.append(hoz_row[column])
-        vert_rows.append(vert_row)
-    return vert_rows
+    size = len(board)
+    rows = []
+
+    for col in range(size):
+        rows.append([((row, col), board[row][col]) for row in range(size)])
+
+    return rows
 
 
 def get_diag_rows(board):
-    diag_length = len(board)
-    max_index = diag_length - 1
+    size = len(board)
 
-    diag_rows = []
-    for diag_row_num in range(2):
-        if diag_row_num == 0:
-            row_idx, col_idx = 0, 0  # start point of downwards line
-            row_shift, col_shift = 1, 1
-        elif diag_row_num == 1:
-            row_idx, col_idx, = max_index, 0  # start point of upwards line
-            row_shift, col_shift = -1, 1
+    rows = [[], []]
+    for i in range(size):
+        rows[0].append(((i, i), board[i][i]))
+        rows[1].append(((i, -i - 1), board[i][-i - 1]))
 
-        diag_row = []
-        for box in range(diag_length):
-            diag_row.append(board[row_idx][col_idx])
-            row_idx += row_shift
-            col_idx += col_shift
-        diag_rows.append(diag_row)
-    return diag_rows
+    return rows
 
 
-def get_next_turn(turn):
-    if turn == 'p1':
-        return 'p2'
-    else:
-        return 'p1'
+def find_empty_indices(board):
+    '''Return a list of index pairs for each empty element in the board'''
+    empty_indices = []
+    for r_idx, row in enumerate(board):
+        for c_idx, col in enumerate(row):
+            if col == ' ':
+                empty_indices.append((r_idx, c_idx))
+
+    return empty_indices
